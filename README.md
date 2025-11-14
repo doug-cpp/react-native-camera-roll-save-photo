@@ -1,14 +1,90 @@
-# React Native Android POC Base Template
+# React Native Vision Camera - Setup and Configuration
 
-This project is a base template for creating Proof of Concept (POC) applications for Android using React Native. It provides a minimal, clean starting point with essential configurations and dependencies pre-configured for Android development.
+This project uses [React Native Vision Camera](https://react-native-vision-camera.com/), a high-performance camera library for React Native with support for photo capture, video recording, and QR/barcode scanning.
 
-The template includes:
+1. Library Installation
+Install the Vision Camera library via npm or yarn:
 
-- React Native 0.82.1 with React 19.1.1
-- TypeScript configuration
-- Safe area context handling
-- Dark/light mode support
-- Clean project structure ready for Android development
+```bash
+npm install react-native-vision-camera
+
+# or
+yarn add react-native-vision-camera
+```
+
+2. Gradle Version Fix
+To avoid build issues, fix your Gradle version dependencies in `android/build.gradle` by setting:
+
+```gradle
+buildscript {
+    ext {
+        buildToolsVersion = "36.0.0"
+        minSdkVersion = 24
+        compileSdkVersion = 36
+        targetSdkVersion = 36
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.1.20"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.5.2") 
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"
+
+```
+Also specify distribution URL in android/gradle/wrapper/gradle-wrapper.properties:
+
+```text
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
+```
+
+These verifications ensure compatibility with the Vision Camera native modules.
+
+3. Camera Permissions
+
+Permissions must be declared in native configuration files.
+
+Android (`android/app/src/main/AndroidManifest.xml`):
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+```
+
+These allow the app to request and use camera at runtime.
+
+4. Basic Usage Example
+
+Use hooks for device and permission management:
+
+```tsx
+import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
+
+const MyCameraComponent = () => {
+  const device = useCameraDevice('back');
+  const { status, requestPermission } = useCameraPermission();
+
+  React.useEffect(() => {
+    if (status !== 'authorized') requestPermission();
+  }, [status]);
+
+  if (!device || status !== 'authorized') return null;
+
+  return (
+    <Camera
+      style={{ flex: 1 }}
+      device={device}
+      isActive={true}
+    />
+  );
+};
+```
 
 ---
 
@@ -117,7 +193,7 @@ npm run lint
 ```text
 src/
 ├── App.tsx                 # Main application component
-├── components/             # Custom components directory
+├── CameraComponent.tsx     # Custom component
 android/                    # Android native code
 ├── app/src/main/java/com/meuapp/
 │   ├── MainActivity.kt    # Android main activity
@@ -145,14 +221,11 @@ To create a new POC from this template:
 When creating your specific POC, add necessary dependencies:
 
 ```bash
-# Example for QR Code POC
-npm install react-native-camera react-native-qrcode-scanner
+# Example for Camera POC
+npm install react-native-vision-camera
 
 # Example for Geolocation POC  
 npm install react-native-geolocation-service @react-native-community/geolocation
-
-# Example for Camera POC
-npm install react-native-camera react-native-fs react-native-permissions
 ```
 
 ## Android Configuration Updates
