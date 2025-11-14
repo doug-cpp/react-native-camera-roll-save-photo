@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, useColorScheme, StatusBar, Button } from 'react-native';
+import { Text, StyleSheet, useColorScheme, StatusBar, Button, Alert, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Camera, useCameraDevice, CameraPermissionStatus, useCodeScanner } from 'react-native-vision-camera';
 
-
- function Cam() {
+function Cam({ onClose }: { onClose: () => void }) {
   const device = useCameraDevice('back');
-
   const [permission, setPermission] = useState<CameraPermissionStatus>('not-determined');
+  const [isActive, setIsActive] = useState(true);
 
-  // Sempre chame os hooks no topo, independentemente de condições
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: (codes) => {
+      setIsActive(false);
       console.log(`Scanned ${codes.length} codes!`, codes);
+      Alert.alert(
+        'Código escaneado',
+        codes.map(code => `Tipo: ${code.type}, Dado: ${code.value}`).join('\n'),
+        [{
+          text: 'Ok',
+          onPress: () => {
+            onClose(); // Notifica o componente pai que câmera deve fechar
+          }
+        }]
+      );
     },
   });
 
@@ -29,7 +38,7 @@ import { Camera, useCameraDevice, CameraPermissionStatus, useCodeScanner } from 
     return (
       <>
         <Text>Sem permissão para câmera</Text>
-        <Button title="Pedir permissão" onPress={async () => {
+        <Button title="Pedir permissão para acessar câmera" onPress={async () => {
           const status = await Camera.requestCameraPermission();
           setPermission(status);
         }} />
@@ -39,47 +48,40 @@ import { Camera, useCameraDevice, CameraPermissionStatus, useCodeScanner } from 
 
   if (device == null) return <Text>Nenhum dispositivo de câmera encontrado</Text>;
 
+  // Exibe a câmera somente se estiver ativa
+  if (!isActive) return null;
+
   return (
     <Camera
       style={StyleSheet.absoluteFill}
       device={device}
-      isActive={true}
+      isActive={isActive}
       codeScanner={codeScanner}
     />
   );
 }
 
-
-// function Cam() {
-//   const device = useCameraDevice('back')
-//   const { hasPermission } = useCameraPermission()
-
-//   if (!hasPermission) return <Text>No camera permission</Text>
-//   if (device == null) return <Text>No camera device</Text>
-//   return (
-//     <Camera
-//       style={StyleSheet.absoluteFill}
-//       device={device}
-//       isActive={true}
-//     />
-//   )
-// }
-
-
 function AppContent() {
   const isDarkMode = useColorScheme() === 'dark';
   const textColor = isDarkMode ? 'white' : 'black';
+  const [showCamera, setShowCamera] = useState(false); // inicia com a câmera fechada
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Text style={{ color: textColor, fontSize: 24 }}>
-        Android POC Base Template
+        Android POC
       </Text>
-      <Text style={{ color: textColor, fontSize: 16 }}>
-        Let's implement our functionality here
+      <Text style={{ color: textColor, fontSize: 16, marginBottom: 20 }}>
+        Leitura de códigos de barras e QR codes
       </Text>
-      <Cam />
+      {showCamera ? (
+        <Cam onClose={() => setShowCamera(false)} />
+      ) : (
+        <View style={{ marginTop: 20 }}>
+          <Button title="Abrir Câmera" onPress={() => setShowCamera(true)} />
+        </View>
+      )}
     </SafeAreaView>
   );
 }
