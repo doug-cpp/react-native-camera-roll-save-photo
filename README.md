@@ -1,4 +1,4 @@
-# React Native Vision Camera - Setup and Configuration
+# React Native QR Code reader - Setup and Configuration
 
 This project uses [React Native Vision Camera](https://react-native-vision-camera.com/), a high-performance camera library for React Native with support for photo capture, video recording, and QR/barcode scanning.
 
