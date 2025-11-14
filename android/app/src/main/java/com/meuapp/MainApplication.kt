@@ -1,4 +1,4 @@
-package com.basetemplate
+package com.qrcodepoc
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -1,7 +1,7 @@
 {
-  "name": "basetemplate",
-  "displayName": "React Native Android Base Template",
-  "description": "Base template for React Native Android POCs",
+  "name": "react-native-qrcode-reader-poc",
+  "displayName": "React Native QR Code Reader POC",
+  "description": "POC for QR Code Reader in React Native using Vision Camera",
   "version": "0.0.1",
   "private": true,
   "scripts": {
