@@ -1,4 +1,4 @@
-# React Native Photo take/save - Setup and Configuration
+# React Native Photo shot/save - Setup and Configuration
 
 This project uses [React Native Vision Camera](https://react-native-vision-camera.com/) and [React Native Camera Roll](https://github.com/react-native-cameraroll/react-native-cameraroll), to shot great photos with a high-performance camera and save it in user device.
 

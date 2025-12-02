@@ -20,7 +20,7 @@ function AppContent() {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Text style={{ color: textColor, fontSize: 24 }}>Android POC</Text>
       <Text style={{ color: textColor, fontSize: 16, marginBottom: 20 }}>
-        Leitura de códigos de barras e QR codes
+        Tirar foto usando a câmera do dispositivo
       </Text>
       {showCamera ? (
         <Cam onClose={() => setShowCamera(false)} />

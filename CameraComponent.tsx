@@ -27,7 +27,7 @@ function Cam({ onClose }: { onClose: () => void }) {
         console.log('Foto capturada:', photo.path);
         
         // Salva na galeria
-        await CameraRoll.save(`file://${photo.path}`, { type: 'photo' });
+        await CameraRoll.saveAsset(`file://${photo.path}`, { type: 'photo' });
         Alert.alert('Sucesso!', 'Foto salva na galeria!');
       } catch (error) {
         console.error('Erro ao tirar foto:', error);
@@ -72,10 +72,9 @@ function Cam({ onClose }: { onClose: () => void }) {
       />
       <View style={styles.overlayContainer}>
         <Text style={styles.overlayText}>Pressione o botão para tirar foto{'\n'}e salvar na galeria</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={takePhoto} style={styles.photoButton}>
-            <Text style={styles.buttonText}>📷 Tirar Foto</Text>
-          </TouchableOpacity>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity onPress={takePhoto} style={styles.photoButton} />
+          <View style={styles.closeButtonContainer}>
           <Button
             title="Fechar"
             onPress={() => {
@@ -83,6 +82,7 @@ function Cam({ onClose }: { onClose: () => void }) {
               onClose();
             }}
           />
+          </View>
         </View>
       </View>
     </>
@@ -113,21 +113,25 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     textAlign: 'center',
   },
-  buttonContainer: {
+  buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '100%',
+    width: '60%',
   },
   photoButton: {
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 25,
+    backgroundColor: 'whitesmoke',
+    paddingBottom: 12,
+    borderRadius: 50,
+    borderColor: 'grey',
+    width: 64,
+    height: 64,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 4,
   },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000',
+  closeButtonContainer: {
+    padding: 10,
+    borderRadius: 5,
   },
 });
 
