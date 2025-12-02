@@ -1,8 +1,9 @@
 # React Native Photo take/save - Setup and Configuration
 
-This project uses [React Native Vision Camera](https://react-native-vision-camera.com/), a high-performance camera library for React Native with support for photo capture, video recording, and QR/barcode scanning.
+This project uses [React Native Vision Camera](https://react-native-vision-camera.com/) and [React Native Camera Roll](https://github.com/react-native-cameraroll/react-native-cameraroll), to take great photos with a high-performance camera and save it in user device.
 
 1. Libraries Installation
+
 Install the Vision Camera library via npm or yarn:
 
 ```bash
