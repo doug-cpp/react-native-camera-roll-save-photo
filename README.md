@@ -1,8 +1,8 @@
-# React Native QR Code reader - Setup and Configuration
+# React Native Photo take/save - Setup and Configuration
 
 This project uses [React Native Vision Camera](https://react-native-vision-camera.com/), a high-performance camera library for React Native with support for photo capture, video recording, and QR/barcode scanning.
 
-1. Library Installation
+1. Libraries Installation
 Install the Vision Camera library via npm or yarn:
 
 ```bash
@@ -10,6 +10,15 @@ npm install react-native-vision-camera
 
 # or
 yarn add react-native-vision-camera
+```
+
+Install the [React Native Camera Roll](https://github.com/react-native-cameraroll/react-native-cameraroll) library via npm or yarn:
+
+```bash
+npm install @react-native-camera-roll/camera-roll
+
+# or
+yarn add @react-native-camera-roll/camera-roll
 ```
 
 2. Gradle Version Fix

@@ -1,7 +1,7 @@
 {
-  "name": "react-native-qrcode-reader-poc",
-  "displayName": "React Native QR Code Reader POC",
-  "description": "POC for QR Code Reader in React Native using Vision Camera",
+  "name": "react-native-camera-poc",
+  "displayName": "React Native Camera POC",
+  "description": "POC for take/save photos in React Native using Vision Camera",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-camera-roll/camera-roll": "^7.10.2",
     "@react-native/new-app-screen": "0.82.1",
     "react": "19.1.1",
     "react-native": "0.82.1",
